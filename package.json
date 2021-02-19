@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@shopify/theme-currency": "^4.0.0",
+    "framer-motion": "^3.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
