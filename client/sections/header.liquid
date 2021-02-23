@@ -96,8 +96,7 @@
             </a>
           {% else %}
             <!-- <a class="site-header__logo-link" href="{{ routes.root_url }}">{{ shop.name }}</a> -->
-            <div style='height:70px' id="wave-wrapper"></div>
-
+            <div style='height:70px' id="wave-wrapper">{{ shop.name }}</div>
           {% endif %}
         {% if request.page_type == 'index' %}
           </h1>
