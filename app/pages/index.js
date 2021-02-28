@@ -1,54 +1,76 @@
+import React, { useState } from 'react';
 import { EmptyState, Layout, Page } from '@shopify/polaris';
 import { ResourcePicker, TitleBar } from '@shopify/app-bridge-react';
 import store from 'store-js';
-import ResourceListWithProducts from '../components/ResourceList';
+import ProductList from '../components/ProductList';
+import axios from 'axios';
 
-const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
+function Index() {
 
-class Index extends React.Component {
-  state = { open: false };
-  render() {
+    const [modal, setModal] = useState({ open: false })
     const emptyState = !store.get('ids');
-    return (
-      <Page>
-        <TitleBar
-          title="Sample App"
-          primaryAction={{
-          content: 'Select products',
-          onAction: () => this.setState({ open: true }),
-        }} />
-        <ResourcePicker
-          resourceType="Product"
-          showVariants={false}
-          open={this.state.open}
-          onSelection={(resources) => this.handleSelection(resources)}
-          onCancel={() => this.setState({ open: false })}
-        />
-        {emptyState ? (
-          <Layout>
-            <EmptyState
-              heading="Discount your products temporarily"
-              action={{
-                content: 'Select products',
-                onAction: () => this.setState({ open: true }),
-              }}
-              image={img}
-            >
-              <p>Select products to change their price temporarily.</p>
-            </EmptyState>
-          </Layout>
-        ) : (
-            <ResourceListWithProducts />
-          )}
-      </Page>
-    );
-  }
 
-  handleSelection = (resources) => {
-    const idsFromResources = resources.selection.map((product) => product.id);
-    this.setState({ open: false });
-    store.set('ids', idsFromResources);
-  };
+    function handleSelection(resources) {
+        const idsFromResources = resources.selection.map((product) => product.id);
+        setModal({ open: false });
+        store.set('ids', idsFromResources)
+
+        const selectedProducts = resources.selection;
+
+        deleteApiData();
+
+        selectedProducts.map(product => makeApiCall(product));
+    }
+
+    function deleteApiData() {
+        const url = '/api/products';
+
+        axios.delete(url);
+    }
+
+    async function makeApiCall(products) {
+        const url = '/api/products';
+
+        axios.post(url, products)
+            .then(result => console.log(result))
+            .catch(error => console.log(error))
+    }
+
+
+    return (
+        <Page>
+            <TitleBar
+                primaryAction={{
+                    content: 'Select New Products',
+                    onAction: () => setModal({ open: true })
+                }}
+            />
+            <ResourcePicker
+                resourceType="Product"
+                showVariants={false}
+                open={modal.open}
+                onCancel={() => setModal({ open: false })}
+                onSelection={(resources) => handleSelection(resources)}
+            />
+            {emptyState ?
+                <Layout>
+                    <EmptyState
+                        heading="Manage your inventory transfers"
+                        action={{
+                            content: 'Select Products',
+                            onAction: () => setModal({ open: true })
+                        }}
+                        image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+                    >
+                        <p>Select Products</p>
+                    </EmptyState>
+                </Layout>
+                :
+                <ProductList />
+            }
+        </Page>
+    )
+
 }
 
 export default Index;

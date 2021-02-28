@@ -1,41 +1,33 @@
 {
-  "polyfillFiles": [
-    "static/chunks/polyfills.js"
-  ],
   "devFiles": [
-    "static/chunks/react-refresh.js"
-  ],
-  "ampDevFiles": [
-    "static/chunks/webpack.js",
-    "static/chunks/amp.js"
-  ],
-  "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/development/dll/dll_d6a88dbe3071bd165157.js",
+    "static/development/dll/dll_d6a88dbe3071bd165157.js.map"
   ],
   "pages": {
     "/": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/index.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_app": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/css/styles.chunk.css",
-      "static/chunks/styles.js",
-      "static/chunks/pages/_app.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js",
+      "static/development/_buildManifest.js"
     ],
     "/_error": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/_error.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
-    "/edit-products": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/edit-products.js"
+    "/_polyfills": [
+      "static/runtime/polyfills.js",
+      "static/runtime/polyfills.js.map"
+    ],
+    "/index": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/script-page": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
-  },
-  "ampFirstPages": []
+  }
 }
