@@ -50,5 +50,8 @@
   "proxy": "https://305b659c.ngrok.io",
   "devDependencies": {
     "typescript": "^4.2.3"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
