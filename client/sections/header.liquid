@@ -13,9 +13,6 @@
   </style>
 
 {% endif %}
-
-<script defer type="module" src="{{ "cart-tool-tip.bundle.js" | asset_url }}"></script>
-<script defer type="module" src="{{ "wave-text.bundle.js" | asset_url }}"></script>
 {% include 'search-drawer' %}
 
 <div data-section-id="{{ section.id }}" data-section-type="header-section" data-header-section>
@@ -95,8 +92,7 @@
               </noscript>
             </a>
           {% else %}
-            <!-- <a class="site-header__logo-link" href="{{ routes.root_url }}">{{ shop.name }}</a> -->
-            <div style='height:70px' id="wave-wrapper">{{ shop.name }}</div>
+            <a class="site-header__logo-link" href="{{ routes.root_url }}">{{ shop.name }}</a>
           {% endif %}
         {% if request.page_type == 'index' %}
           </h1>
