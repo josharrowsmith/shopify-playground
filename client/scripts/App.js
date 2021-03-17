@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 import { IconContext } from 'react-icons';
 import { GiPresent } from "react-icons/gi";
-import Nav from "./Nav";
+import Nav from "./components/Nav"
 
 const Container = styled.div`
   display: flex;

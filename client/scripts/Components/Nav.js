@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { IconContext } from 'react-icons';
 import { FaTimes } from 'react-icons/fa';
-import Wheel from "./Wheel"
+import GameScreen from "../GameScreen"
+import { AuthContext } from "../context"
+import { useHistory } from "react-router-dom";
 
 const variants = {
   open: { x: 0 },
@@ -21,32 +23,20 @@ const MenuNav = styled(motion.nav)`
   padding: 40px;
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  color: white;
-`
 
-const Form = styled.div`
-  margin: 3em 1.5em;
-  margin-right: 3em;
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-  li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-`
-const SpinBtn = styled.button`
-  width: 200px;
-  height: 50px;
-`
 
 export const Nav = ({ isNavOpen, setIsNavOpen }) => {
+  const authContext = useContext(AuthContext);
+  const history = useHistory();
+
+
+  const CloseNav = () => {
+    authContext.setUserId("");
+    authContext.updateAuthStatus();
+    setIsNavOpen(false)
+    history.push("/");
+  }
+
   return (
     <MenuNav
       variants={variants}
@@ -54,27 +44,10 @@ export const Nav = ({ isNavOpen, setIsNavOpen }) => {
       animate={isNavOpen ? "open" : "closed"}
       transition={{ damping: 300 }}
     >
-        <IconContext.Provider
-        value={{ color: 'white', size: '50px' }}
-        >
-            <FaTimes onClick={() => setIsNavOpen(false)} />
+        <IconContext.Provider value={{ color: 'white', size: '50px' }}>
+          <FaTimes onClick={CloseNav} />
         </IconContext.Provider>
-        <Grid>
-            <div>
-                <Wheel/>
-            </div>
-            <Form>
-              <h1>WE HAVE A BONUS FOR NEW VISITORS</h1>
-              <p>You have a chance to win a discount for your webshop. Try your luck on our Coupon Wheel, click the button below</p>
-              <SpinBtn onClick={() => console.log("hey")}>SPIN THE WHEEL</SpinBtn>
-              <p>RULES</p>
-              <ul>
-                <li>- One spin per customer</li>
-                <li>- can you not hack my shit</li>
-                <li>- no fuck heads</li>
-              </ul>
-            </Form>
-        </Grid>
+        <GameScreen/>
     </MenuNav>
   );
 };
