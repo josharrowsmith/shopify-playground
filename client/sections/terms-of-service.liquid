@@ -1,0 +1,91 @@
+<div class="shopify_explorer__content">
+    {%- assign expand_questions = section.settings.expand_questions -%}
+
+    {%- for block in section.blocks -%}
+        {%- case block.type -%}
+            {%- when 'separator' -%}
+                <h3 class="shopify_explorer_faq__separator h3" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</h3>
+
+            {%- when 'question' -%}
+
+                <div class="shopify_explorer_faq__item {% unless expand_questions %}shopify_explorer_faq__item--expandable{% endunless %}" {{ block.shopify_attributes }}>
+                    <h3 id="{{block.settings.id}}" class="shopify_explorer_faq__question h5 {% unless expand_questions %}link{% endunless %}">{{ block.settings.title }}</h3>
+                    <div class="shopify_explorer_faq__answer rte">
+                        {{ block.settings.answer }}
+                    </div>
+                </div>
+        {%- endcase -%}
+    {%- endfor -%}
+</div>
+{% schema %}
+
+{
+    "name": "Privacy Policy Sections",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "expand_questions",
+            "label": "Expand all questions by default",
+            "default": false
+        }
+    ],
+    "blocks": [
+        {
+            "type": "separator",
+            "name": "Section separator",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading"
+                }
+            ]
+        }, {
+            "type": "question",
+            "name": "Question",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Question"
+                }, {
+                    "type": "richtext",
+                    "id": "answer",
+                    "label": "Answer"
+                }, {
+                    "type": "number",
+                    "id": "id",
+                    "label": "Id"
+                }
+            ]
+        }
+    ]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+
+
+
+{% endstylesheet %}
+
+
+{% javascript %}
+
+(function () {
+    $('body').on('click', '.shopify_explorer_faq__question', function () {
+        $(this).next('.shopify_explorer_faq__answer').slideToggle(150).toggleClass('active');
+        $(this).toggleClass('active');
+    });
+
+    $(document).on('shopify:block:select', '#shopify-section-page-shopify_explorer_faq-template', function (event) {
+        $(event.target).find('.shopify_explorer_faq__answer').slideDown(150);
+    });
+
+    $(document).on('shopify:block:deselect', '#shopify-section-page-shopify_explorer_faq-template', function (event) {
+        $(event.target).find('.shopify_explorer_faq__answer').slideUp(150);
+    });
+}());
+
+{% endjavascript %} 

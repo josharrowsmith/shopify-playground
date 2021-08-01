@@ -1,0 +1,76 @@
+{%- comment -%}
+<div class="page-width">
+    <div class="grid">
+      <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+        <div class="section-header text-center">
+          <h1>{{ page.title }}</h1>
+        </div>
+  
+        <div class="rte">
+          {{ page.content }}
+        </div>
+        
+        <div id="wishlist-items-container">
+          
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <script src="{{ 'swym-wishlist-page.js' | asset_url }}" ></script>
+  {%- endcomment -%}
+
+  <!-- Include html in the body -->
+<div id="swym-wishlist-render-container"></div>
+<script type="text/javascript">// <![CDATA[
+window.SwymCallbacks = window.SwymCallbacks || [];
+window.SwymCallbacks.push(function(swat) {
+  var wishlistContainerElement = document.querySelector("#swym-wishlist-render-container");
+  var queryParams = swat.utils.getEncodedAsObject(window.location.search);
+  // Contains queryParams["lid"];
+  swat.ui.renderWishlistInContainer(wishlistContainerElement, queryParams);
+});
+
+
+
+// setTimeout(function() {
+//   if ($(".swym-delete-btn").length) {
+//    console.log("found")
+// } else {
+//    console.log("not here")
+// }
+//     $(".swym-delete-btn").on("click", function() {
+//       window.SwymCallbacks || (window.SwymCallbacks = []),
+//       window.SwymCallbacks.push(function () {
+//         window._swat.fetch(function (products) {
+//           console.log('delete')
+//          if(products.length){
+//           var count = document.querySelector(
+//               "[data-header-wishlist-count]"
+//             ),
+//             icon = document.querySelector(
+//               "[data-header-wishlist]"
+//             ),
+//             quantity = products.length;
+//           quantity
+//             ? (icon.classList.add("active"),
+//               (count.textContent = quantity))
+//             : icon.classList.contains("active") &&
+//               icon.classList.remove("active");
+//           } else {
+//             var count = document.querySelector("[data-header-wishlist-count]"),
+//             icon = document.querySelector(
+//               "[data-header-wishlist]"
+//             ),
+//             quantity = '';
+//             (icon.classList.remove("active"),
+//             (count.textContent = quantity))
+//           }
+//         });
+//       });
+//     })
+// }, 1000)
+</script>
+
+{% include 'swym-delete' %}

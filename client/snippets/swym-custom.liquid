@@ -1,0 +1,70 @@
+<script>
+    // function waitForElm(selector) {
+    // return new Promise(resolve => {
+    //     if (document.querySelector(selector)) {
+    //         return resolve(document.querySelector(selector));
+    //     }
+
+    //     const observer = new MutationObserver(mutations => {
+    //         if (document.querySelector(selector)) {
+    //             resolve(document.querySelector(selector));
+    //             observer.disconnect();
+    //         }
+    //     });
+
+    //     observer.observe(document.body, {
+    //         childList: true,
+    //         subtree: true
+    //         });
+    //     });
+    // }
+    // waitForElm('.swym-loaded').then(elm => console.log(elm.textContent));
+    const elm = await waitForElm('.some-classs')
+    function swymCallbackFn(swat) {
+        if (!qvMutations) {
+            var qvMutations = new MutationObserver(function (mutations) {
+                mutations.forEach((val, key, arr) => {
+                    if (Object.is(arr.length - 1, key)) {
+                        if (val.target.classList.contains("swym-added")) {
+                            swat.fetch(function (products) {
+                                if (products.length) {
+                                    var count = document.querySelector(
+                                        "[data-header-wishlist-count]"
+                                    ),
+                                        icon = document.querySelector(
+                                            "[data-header-wishlist]"
+                                        ),
+                                        quantity = products.length;
+                                    quantity
+                                        ? (icon.classList.add("active"),
+                                            (count.textContent = quantity))
+                                        : icon.classList.contains("active") &&
+                                        icon.classList.remove("active");
+                                } else {
+                                    var count = document.querySelector("[data-header-wishlist-count]"),
+                                        icon = document.querySelector(
+                                            "[data-header-wishlist]"
+                                        ),
+                                        quantity = '';
+                                    (icon.classList.remove("active"),
+                                        (count.textContent = quantity))
+                                }
+                            })
+                        }
+                    }
+                })
+            });         
+            qvMutations.observe(document.querySelector(".swym-add-to-wishlist"), {
+                attributes: true,
+                attributeFilter: ['class'],
+                attributeOldValue: true,
+            })
+        }
+    }
+
+
+    if (!window.SwymCallbacks) {
+        window.SwymCallbacks = [];
+    }
+    window.SwymCallbacks.push(swymCallbackFn);
+</script>

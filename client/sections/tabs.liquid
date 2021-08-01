@@ -1,0 +1,184 @@
+<div class="faqs" itemscope itemtype="https://schema.org/FAQPage">
+    {% for block in section.blocks %}
+        {% if block.type == "FAQHeading" %}
+            <h1 class="title faq--heading text-center">{{ block.settings.faqHeading }}</h1>
+        {% endif %}
+    {% endfor %}
+
+    <div data-tab-component>
+        <div aria-label="Tabbed sections" class="faq__tabList" role="tablist">
+            {% for block in section.blocks %}
+                {% if block.type == "faqCategories" %}
+                    <button aria-controls="tab1-content" aria-selected="true" class="tab__button" id="tab1" role="tab">
+                        {{ block.settings.faqProductType1 }}
+                    </button>
+                    <button aria-controls="tab2-content" aria-selected="false" class="tab__button" id="tab2" role="tab">
+                        {{ block.settings.faqProductType2 }}
+                    </button>
+                    <button aria-controls="tab3-content" aria-selected="false" class="tab__button" id="tab3" role="tab">
+                        {{ block.settings.faqProductType3 }}
+                    </button>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+        <section aria-labelledby="tab1" class="faq__tabPanel" id="tab1-content" role="tabpanel" tabindex="0">
+
+            <div data-tab-component>
+                <div aria-label="Tabbed sections" role="tablist">
+                    <dl class="faqAccordion">
+                        {% for block in section.blocks %}
+                            {%- assign type = block.settings.productType -%}
+
+                            {%- if type contains "CategoryA"  -%}
+
+                                <dt itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+
+                                    <button aria-controls="faq{{ block.id }}-content" aria-selected="true" class="accordion_heading faq-list" id="faq{{ block.id }}" itemprop="name" role="tab">
+                                        {{ block.settings.faqQuestion }}
+                                    </button>
+                                </dt>
+                                <dd aria-hidden="true" aria-labelledby="faq{{ block.id }}" class="success_stories_data" id="faq{{ block.id }}-content" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer" role="tabpanel" tabindex="0">
+                                    <p itemprop="text">
+                                        {{ block.settings.faqAnswer }}
+                                    </p>
+                                </dd>
+
+                            {%- endif -%}
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+
+        </section>
+
+        <section aria-hidden="true" aria-labelledby="tab2" id="tab2-content" role="tabpanel" tabindex="0">
+            <div data-tab-component>
+                <div aria-label="Tabbed sections" role="tablist">
+                    <dl class="faqAccordion">
+                        {% for block in section.blocks %}
+                            {%- assign type = block.settings.productType -%}
+
+                            {%- if type contains "CategoryB"  -%}
+
+                                <dt itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+
+                                    <button aria-controls="faq{{ block.id }}-content" aria-selected="true" class="accordion_heading faq-list" id="faq{{ block.id }}" itemprop="name" role="tab">
+                                        {{ block.settings.faqQuestion }}
+                                    </button>
+                                </dt>
+                                <dd aria-hidden="true" aria-labelledby="faq{{ block.id }}" class="success_stories_data" id="faq{{ block.id }}-content" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer" role="tabpanel" tabindex="0">
+                                    <p itemprop="text">
+                                        {{ block.settings.faqAnswer }}
+                                    </p>
+                                </dd>
+
+                            {%- endif -%}
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        </section>
+        <section aria-hidden="true" aria-labelledby="tab3" id="tab3-content" role="tabpanel" tabindex="0">
+            <div data-tab-component>
+                <div aria-label="Tabbed sections" role="tablist">
+                    <dl class="faqAccordion">
+                        {% for block in section.blocks %}
+                            {%- assign type = block.settings.productType -%}
+
+                            {%- if type contains "CategoryC"  -%}
+
+                                <dt itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+
+                                    <button aria-controls="faq{{ block.id }}-content" aria-selected="true" class="accordion_heading faq-list" id="faq{{ block.id }}" itemprop="name" role="tab">
+                                        {{ block.settings.faqQuestion }}
+                                    </button>
+                                </dt>
+                                <dd aria-hidden="true" aria-labelledby="faq{{ block.id }}" class="success_stories_data" id="faq{{ block.id }}-content" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer" role="tabpanel" tabindex="0">
+                                    <p itemprop="text">
+                                        {{ block.settings.faqAnswer }}
+                                    </p>
+                                </dd>
+
+                            {%- endif -%}
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% schema %}
+{
+	"blocks": [
+		{
+			"name": "FAQ Heading",
+			"type": "FAQHeading",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "faqHeading",
+					"label": "FAQ Title",
+					"default": "FAQs"
+				}
+			]
+		},
+		{
+			"name": "FAQ Categories",
+			"type": "faqCategories",
+			"settings": [
+				{
+					"type": "text",
+					"label": "faqProductType1",
+					"id": "faqProductType1",
+					"default": "Formula"
+				},
+				{
+					"type": "text",
+					"label": "faqProductType2",
+					"id": "faqProductType2",
+					"default": "Porridge"
+				},
+				{
+					"type": "text",
+					"label": "faqProductType3",
+					"id": "faqProductType3",
+					"default": "Snack Puffs"
+				}
+			]
+		},
+		{
+			"name": "FAQ Q and A",
+			"type": "faqQandA",
+			"settings": [
+				{
+					"type": "select",
+					"id": "productType",
+					"options": [
+				      { "value": "CategoryA", "label": "CategoryA"},
+				      { "value": "CategoryB", "label": "CategoryB"},
+				      { "value": "CategoryC", "label": "CategoryC"}
+					],
+					"label": "Select Product"					
+				},
+	            {
+	                "type": "text",
+	                "label": "Enter Question",
+	                "id": "faqQuestion",
+	                "default": "FAQ question content goes here"
+	            },
+	            {
+	                "type": "textarea",
+	                "label": "Enter Answer",
+	                "id": "faqAnswer",
+	                "default": "Lorem ipsum dolor amit icit"
+	            }
+			]
+		}
+	]
+}
+
+{% endschema %}
