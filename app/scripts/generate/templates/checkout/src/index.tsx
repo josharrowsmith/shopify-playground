@@ -4,11 +4,12 @@ import {
   TextBlock,
   BlockStack,
 } from '@shopify/checkout-ui-extensions-react';
+
 render('Checkout::Feature::Render', ({extensionPoint}) => (
   <App extensionPoint={extensionPoint} />
 ));
-function App({extensionPoint}) {
-  console.log('heyyyyyyyyy')
+
+function App({extensionPoint}: {extensionPoint: string}) {
   return (
     <BlockStack>
       <TextBlock>Welcome to the {extensionPoint} extension!</TextBlock>
